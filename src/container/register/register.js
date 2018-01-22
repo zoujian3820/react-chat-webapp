@@ -3,12 +3,14 @@
  */
 import React from 'react'
 import Logo from '../../component/logo/logo'
-import {List, InputItem, WingBlank, WhiteSpace, Button} from 'antd-mobile'
+import {List, InputItem, WingBlank, WhiteSpace, Button, Radio} from 'antd-mobile'
 
 class Register extends React.Component {
   constructor(props) {
     super(props)
-    this.register = this.register.bind(this)
+    this.state = {
+      type: 'genius' //或者boss
+    }
   }
 
   register() {
@@ -17,10 +19,17 @@ class Register extends React.Component {
   }
 
   render() {
+    const RadioItem = Radio.RadioItem
     return (
       <div>
         <Logo></Logo>
-        <h2>注册页</h2>
+        <List>
+          <InputItem>用户</InputItem>
+          <InputItem>密码</InputItem>
+          <InputItem>确认密码</InputItem>
+          <RadioItem checked={this.state.type == 'genius'}>牛人</RadioItem>
+          <RadioItem checked={this.state.type == 'boss'}>BOSS</RadioItem>
+        </List>
       </div>
     )
   }
