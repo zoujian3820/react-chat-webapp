@@ -24,3 +24,5 @@
 ###### npm --save || --save-dev
 `cnpm install antd-mobile@next --save-dev`<br>
 `cnpm install cookie-parser --save 基于cookie用户验证，express依赖cookie-parser`<br>
+
+##### 项目运行 npm start
