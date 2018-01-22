@@ -53,12 +53,12 @@ app.get('/data', function (req, res) {
   //User.find({}, function (err, doc) {
   //  res.json(doc) //无条件查询所有数据,返回[{xx:aa},{rr:bb}]集合结构数据
   //})
-  User.find({user:'xiaoming'}, function (err, doc) {
-    res.json(doc) //条件查询user:'xiaoming'的数据,返回[{xx:aa},{rr:bb}]集合结构数据
-  })
-  //User.findOne({user:'xiaoming'}, function (err, doc) {
-  //  res.json(doc) //findOne只查询一条，查到就返回，且返回结构为{rr:bb}单条数据
+  //User.find({user:'xiaoming'}, function (err, doc) {
+  //  res.json(doc) //条件查询user:'xiaoming'的数据,返回[{xx:aa},{rr:bb}]集合结构数据
   //})
+  User.findOne({user:'xiaoming'}, function (err, doc) {
+    res.json(doc) //findOne只查询一条，查到就返回，且返回结构为{rr:bb}单条数据
+  })
 })
 app.listen(9093, function () {
   console.log('node app start at port 9093')

@@ -2,7 +2,7 @@
  * Created by Mrzou on 2017-12-27.
  */
 import React from 'react'
-import {BrowserRouter, Route,Link, Redirect,Switch} from 'react-router-dom'
+import {Route,Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import App from './App'
 import {logout} from './Auth.redux'
@@ -17,13 +17,12 @@ function Qibinglian() {
 @connect(state=>state.auth, {logout})
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
+  //constructor(props) {
+  //  super(props)
+  //}
   render() {
     const match = this.props.match
-    console.log(this.props)
+   // console.log(this.props)
     const redirectToLogin = <Redirect to="/login"></Redirect>
     const app = (
       <div>

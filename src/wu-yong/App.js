@@ -11,7 +11,7 @@ import { addGun, removeGun, addGunAsync } from './index.redux'
 //const actionCreators = {addGun, removeGun, addGunAsync}
 //App = connect(mapStatetoProps, actionCreators)(App)
 @connect(
-  state=>({num:state.counter}),//你要什么属性放到props中
+  state=>({num: state.counter}),//你要什么属性放到props中
   {addGun, removeGun, addGunAsync}//你要什么方法，放到props中，自动dispatch
 )
 
