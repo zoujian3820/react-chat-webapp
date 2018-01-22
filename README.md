@@ -20,3 +20,7 @@
 `journal=true #启用日志文件，默认启用`<br>
 `quiet=true #这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false`<br>
 `port=27017 #端口号 默认为27017`
+
+###### npm --save || --save-dev
+`cnpm install antd-mobile@next --save-dev`<br>
+`cnpm install cookie-parser --save 基于cookie用户验证，express依赖cookie-parser`<br>
