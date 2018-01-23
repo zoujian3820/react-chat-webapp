@@ -5,6 +5,7 @@ import thunk from 'redux-thunk' //react处理异步的action (action原先返回
 import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Redirect,Switch} from 'react-router-dom'
 
+import AuthRoute from './component/authroute/authroute'
 import reducers from './reducer'
 import './config'
 
@@ -20,10 +21,9 @@ ReactDom.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Switch>
+          <AuthRoute></AuthRoute>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
-        </Switch>
       </div>
     </BrowserRouter>
   </Provider>,
