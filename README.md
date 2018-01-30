@@ -26,4 +26,4 @@
 `cnpm install cookie-parser --save express插件 基于cookie用户验证，express依赖cookie-parser 解析cookie`<br>
 `cnpm install body-parser --save   express插件 解析post请求过来的json`<br>
 
-##### 项目运行 npm start
+##### 项目运行 npm start 
