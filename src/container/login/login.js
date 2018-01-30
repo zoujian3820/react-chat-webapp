@@ -30,6 +30,8 @@ class Login extends React.Component {
           <Button type="primary">登录</Button>
           <WhiteSpace />
           <Button onClick={this.register} type="primary">注册</Button>
+          <WhiteSpace />
+          <WhiteSpace />
         </WingBlank>
       </div>
     )

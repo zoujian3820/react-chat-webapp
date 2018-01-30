@@ -64,15 +64,19 @@
 //  console.log('node app start at port 9093')
 //})
 
-
 const express = require('express')
+const bodyParser = require('body-parser')
+const cookParser = require('cookie-parser')
+
 const userRouter = require('./user')
 
 //新建App
 const app = express()
 
-app.use('/user',userRouter)
+app.use(cookParser())
+app.use(bodyParser.json())
 
+app.use('/user', userRouter)
 
 app.get('/', function (req, res) { //请求，响应
   res.send('<h1>Hello world</h1>')
