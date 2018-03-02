@@ -9,6 +9,7 @@
 ###### 官网下载后，直接点击安装，安装路径F:\mongodb\
 `F:\mongodb\bin\mongod.exe`<br>
  `mongod -dbpath "F:\mongodb\data\db"`<br>
+ `F:\mongodb\data\db\log\MongoDB.log 建一个空文件MongoDB.log 作日志输出文件`<br>
  `mongod --config "F:\mongodb\mongo.conf"`<br>
  `mongod --config "F:\mongodb\mongo.conf" --install --serviceName "MongoDB"`<br>
 ` net start MongoDB `
