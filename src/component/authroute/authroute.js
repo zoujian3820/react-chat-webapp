@@ -28,7 +28,7 @@ class AuthRoute extends React.Component {
          if (res.status === 200) {
             if (res.data.code === 0) {
                //有登录信息
-
+               //dispatch当前后台返回的用户信息与当前reduce state合并，触发组件数据更新
                this.props.loadData(res.data.data)
             } else {
                this.props.history.push('/login')

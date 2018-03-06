@@ -26,5 +26,6 @@
 `cnpm install antd-mobile@next --save-dev`<br>
 `cnpm install cookie-parser --save express插件 基于cookie用户验证，express依赖cookie-parser 解析cookie`<br>
 `cnpm install body-parser --save   express插件 解析post请求过来的json`<br>
+`cnpm install prop-types  --save   react v15.5.0版本开始,参数校验库分离成单独库了`<br>
 
 ##### 项目运行 npm start

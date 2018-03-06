@@ -45,7 +45,6 @@ class Login extends React.Component {
             {/*登录跳转*/}
             {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null}
             <Logo></Logo>
-            <h2>登录页</h2>
             <WingBlank>
                <List>
                   {this.props.msg ? <p className="error-msg">{this.props.msg}</p> : null}

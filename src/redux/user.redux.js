@@ -3,14 +3,15 @@
  */
 import axios from 'axios'
 import {getReadireactPath} from '../util'
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+//const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+//const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const AUTH_SUCESS = 'AUTH_SUCESS'
 const ERROR_MSG = 'ERROR_MSG'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
 
 const initState = {
    redirectTo: '',
-   isAuth: 'false',
+   //isAuth: 'false',
    msg: '',
    user: '',
    type: ''
@@ -19,10 +20,12 @@ const initState = {
 //reducer
 export function user(state = initState, action) {
    switch (action.type) {
-      case REGISTER_SUCCESS:
-         return {...state, msg: '', redirectTo: getReadireactPath(action.payload), isAuth: true, ...action.payload}
-      case LOGIN_SUCCESS:
-         return {...state, msg: '', redirectTo: getReadireactPath(action.payload), isAuth: true, ...action.payload}
+      //case REGISTER_SUCCESS:
+      //   return {...state, msg: '', redirectTo: getReadireactPath(action.payload), isAuth: true, ...action.payload}
+      //case LOGIN_SUCCESS:
+      //   return {...state, msg: '', redirectTo: getReadireactPath(action.payload), isAuth: true, ...action.payload}
+      case AUTH_SUCESS:
+         return {...state, msg: '', redirectTo: getReadireactPath(action.payload), ...action.payload}
       case LOAD_DATA:
          return {...state, ...action.payload}
       case ERROR_MSG:
@@ -32,12 +35,16 @@ export function user(state = initState, action) {
    }
 }
 
-function registerSuccess(data) {
-   return {type: REGISTER_SUCCESS, payload: data}
+function authSuceess(obj) {
+   const {pwd,...data} = obj
+   return {type: AUTH_SUCESS, payload: data}
 }
-function loginSuccess(data) {
-   return {type: LOGIN_SUCCESS, payload: data}
-}
+//function registerSuccess(data) {
+//   return {type: REGISTER_SUCCESS, payload: data}
+//}
+//function loginSuccess(data) {
+//   return {type: LOGIN_SUCCESS, payload: data}
+//}
 function errorMsg(msg) {
    return {
       msg,
@@ -52,6 +59,19 @@ export function loadData(userinfo) {
    }
 }
 
+export function update(data) {
+   return dispatch=> {
+      axios.post('/user/update', data).then(res=> {
+         if (res.status === 200 && res.data.code === 0) {
+            console.log(res.data.data)
+            dispatch(authSuceess(res.data.data))
+         } else {
+            dispatch(errorMsg(res.data.msg))
+         }
+      })
+   }
+}
+
 export function login({user,pwd}) {
    if (!user || !pwd) {
       return errorMsg('用户密码必须输入')
@@ -60,14 +80,14 @@ export function login({user,pwd}) {
       axios.post('/user/login', {user, pwd}).then((res)=> {
          console.log('ssssss', res)
          if (res.status === 200 && res.data.code === 0) {
-            dispatch(loginSuccess(res.data.data))
+            // dispatch(loginSuccess(res.data.data))
+            dispatch(authSuceess(res.data.data))
          } else {
             dispatch(errorMsg(res.data.msg))
          }
       })
    }
 }
-
 
 export function register({user, pwd, repeatpwd, type}) {
    if (!user || !pwd || !type) {
@@ -76,13 +96,14 @@ export function register({user, pwd, repeatpwd, type}) {
    if (pwd !== repeatpwd) {
       return errorMsg('密码和确认密码不同')
    }
-   console.log(user, pwd, type)
+  // console.log(user, pwd, type)
 
    return dispatch => {
       axios.post('/user/register', {user, pwd, type}).then((res)=> {
          console.log('rrrr', res)
          if (res.status === 200 && res.data.code === 0) {
-            dispatch(registerSuccess({...res.data.data, pwd}))
+            // dispatch(registerSuccess({...res.data.data, pwd}))
+            dispatch(authSuceess({...res.data.data, pwd}))
          } else {
             dispatch(errorMsg(res.data.msg))
          }

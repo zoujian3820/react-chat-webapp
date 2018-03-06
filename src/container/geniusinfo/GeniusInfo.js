@@ -1,6 +1,7 @@
 /**
- * Created by Mrzou on 2018/3/2.
+ * Created by Mrzou on 2018/3/5.
  */
+
 import React from 'react'
 import {NavBar,InputItem,TextareaItem,Button} from 'antd-mobile'
 import AvatarSelector from '../../component/avatar-selector/avatar-selector'
@@ -13,14 +14,12 @@ import {update} from '../../redux/user.redux'
    {update}
 )
 
-class BossInfo extends React.Component {
+class GeniusInfo extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
          title: '',
-         desc: '',
-         company: '',
-         money: ''
+         desc: ''
       }
 
       this.selectAvatar = this.selectAvatar.bind(this)
@@ -45,12 +44,10 @@ class BossInfo extends React.Component {
       return (
          <div>
             {redirect && redirect !== path ? <Redirect to={redirect}></Redirect> : null}
-            <NavBar mode="dark" leftContent="Back">BOOS完善信息页面</NavBar>
+            <NavBar mode="dark" leftContent="Back">牛人完善信息页面</NavBar>
             <AvatarSelector selectAvatar={this.selectAvatar}></AvatarSelector>
-            <InputItem onChange={v=>this.onChange('title', v)}>招聘职位</InputItem>
-            <InputItem onChange={v=>this.onChange('company', v)}>公司名称</InputItem>
-            <InputItem onChange={v=>this.onChange('money', v)}>职位薪资</InputItem>
-            <TextareaItem autoHeight title="职位要求" rows={3} onChange={v=>this.onChange('desc', v)}></TextareaItem>
+            <InputItem onChange={v=>this.onChange('title', v)}>求职岗位</InputItem>
+            <TextareaItem autoHeight title="个人简介" rows={3} onChange={v=>this.onChange('desc', v)}></TextareaItem>
             <Button
                onClick={()=>{
                   this.props.update(this.state)
@@ -61,4 +58,4 @@ class BossInfo extends React.Component {
       )
    }
 }
-export default BossInfo
+export default GeniusInfo
