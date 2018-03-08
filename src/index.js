@@ -3,13 +3,15 @@ import ReactDom from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk' //react处理异步的action (action原先返回对象，现可以反回一个函数，然后异步手动dispatch)
 import {Provider} from 'react-redux'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route,Switch} from 'react-router-dom'
 
 import AuthRoute from './component/authroute/authroute'
 import BossInfo from './container/bossinfo/bossinfo'
 import GeniusInfo from './container/geniusinfo/geniusinfo'
+import Dashboard from './component/dashboard/dashboard'
 
 
+// 合并所有reducer 并且返回
 // 合并所有reducer 并且返回
 //reducer.js
 //import { combineReducers } from 'redux'
@@ -70,16 +72,24 @@ const store = createStore(reducers, compose(
     *
    **/
 
+//boss genus me msg 4个页面
+
+//function Dashboard(){
+//   return <h2>Dashboard</h2>
+//}
 
 ReactDom.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
         <AuthRoute></AuthRoute>
-        <Route path="/bossinfo" component={BossInfo}></Route>
-        <Route path="/geniusinfo" component={GeniusInfo}></Route>
-        <Route path="/login" component={Login}></Route>
-        <Route path="/register" component={Register}></Route>
+        <Switch>
+          <Route path="/bossinfo" component={BossInfo}></Route>
+          <Route path="/geniusinfo" component={GeniusInfo}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}></Route>
+          <Route component={Dashboard}></Route>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>,

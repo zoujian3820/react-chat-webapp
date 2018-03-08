@@ -43,7 +43,7 @@ class Login extends React.Component {
       return (
          <div>
             {/*登录跳转*/}
-            {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null}
+            {(this.props.redirectTo && this.props.redirectTo !== '/login') ? <Redirect to={this.props.redirectTo}></Redirect> : null}
             <Logo></Logo>
             <WingBlank>
                <List>

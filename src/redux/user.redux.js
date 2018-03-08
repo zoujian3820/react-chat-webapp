@@ -6,6 +6,7 @@ import {getReadireactPath} from '../util'
 //const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 //const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const AUTH_SUCESS = 'AUTH_SUCESS'
+const LOGOUT = 'LOGOUT'
 const ERROR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
 
@@ -30,6 +31,8 @@ export function user(state = initState, action) {
          return {...state, ...action.payload}
       case ERROR_MSG:
          return {...state, msg: action.msg, isAuth: false}
+      case LOGOUT:
+         return {...initState, redirectTo: '/login'}
       default:
          return state
    }
@@ -57,6 +60,10 @@ export function loadData(userinfo) {
       type: LOAD_DATA,
       payload: userinfo
    }
+}
+
+export function logoutSubmit() {
+   return {type: LOGOUT}
 }
 
 export function update(data) {
@@ -96,7 +103,7 @@ export function register({user, pwd, repeatpwd, type}) {
    if (pwd !== repeatpwd) {
       return errorMsg('密码和确认密码不同')
    }
-  // console.log(user, pwd, type)
+   // console.log(user, pwd, type)
 
    return dispatch => {
       axios.post('/user/register', {user, pwd, type}).then((res)=> {
