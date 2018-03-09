@@ -34,7 +34,7 @@ class AuthRoute extends React.Component {
                this.props.history.push('/login')
                console.log(this.props)
             }
-            console.log(res.data)
+            //console.log(res.data)
          }
       }).catch(res=> {
          console.log(res)

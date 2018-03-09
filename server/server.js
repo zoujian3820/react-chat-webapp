@@ -65,14 +65,32 @@
 //})
 
 const express = require('express')
-const utils = require('utility')
 const bodyParser = require('body-parser')
 const cookParser = require('cookie-parser')
+const app = express() //新建App
+const model = require('./model')
+const Chat = model.getModel('chat')
+
+//work with express (socket.io关联express)
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+io.on('connection', function (socket) {
+   console.log('user login')
+   socket.on('sendmsg', function (data) {
+      //console.log(data)
+      //io.emit('recvmsg', data) //服务器端派发一个全局事件'recvmsg'
+      const {from,to,msg} = data
+      const chatid = [from, to].sort().join('_')
+      Chat.create({chatid, from, to, content: msg}, function (err, doc) {
+         console.log(doc._doc)
+         io.emit('recvmsg',Object.assign({},doc._doc))
+      })
+
+   })
+})
+
 
 const userRouter = require('./user')
-
-//新建App
-const app = express()
 
 app.use(cookParser())
 app.use(bodyParser.json())
@@ -80,9 +98,13 @@ app.use(bodyParser.json())
 app.use('/user', userRouter)
 
 app.get('/', function (req, res) { //请求，响应
-  res.send('<h1>Hello world</h1>')
+   res.send('<h1>Hello world</h1>')
 })
 
-app.listen(9093, function () {
-  console.log('node app start at port 9093')
+//app.listen(9093, function () {
+//   console.log('node app start at port 9093')
+//})
+
+server.listen(9093, function () {
+   console.log('node app start at port 9093')
 })
