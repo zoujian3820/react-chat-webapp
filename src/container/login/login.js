@@ -6,7 +6,7 @@ import Logo from '../../component/logo/logo'
 import {List, InputItem, WingBlank, WhiteSpace, Button} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {login} from '../../redux/user.redux'
+import {login, clearRedirectTo} from '../../redux/user.redux'
 import compForm from '../../component/form/form'
 
 /*
@@ -50,7 +50,7 @@ class Hello extends React.Component {
 
 @connect(
    state=>state.user,
-   {login}
+   {login, clearRedirectTo}
 )
 
 @compForm
@@ -63,6 +63,12 @@ class Login extends React.Component {
       }
       this.register = this.register.bind(this)
       this.handleLogin = this.handleLogin.bind(this)
+   }
+
+   componentDidMount() {
+      if(this.props.redirectTo == '/login'){
+         this.props.clearRedirectTo()
+      }
    }
 
    register() {

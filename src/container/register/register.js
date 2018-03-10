@@ -50,6 +50,7 @@ class Register extends React.Component {
 
    render() {
       const RadioItem = Radio.RadioItem
+      console.log(this.props)
       return (
          <div>
             {/*注册跳转*/}

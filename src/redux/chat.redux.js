@@ -21,14 +21,19 @@ const initState = {
 export function chat(state = initState, action) {
    switch (action.type) {
       case MSG_LIST:
+         console.log(action)
          return {
             ...state,
             users: action.payload.users,
             chatmsg: action.payload.msgs,
-            unread: action.payload.msgs.filter(v=>!v.read).length
+            unread: action.payload.unread
          }
       case MSG_RECV:
-         return {...state, chatmsg: [...state.chatmsg, action.payload], unread: state.unread + 1}
+         return {
+            ...state,
+            chatmsg: [...state.chatmsg, action.payload.msgs],
+            unread: state.unread + action.payload.unread
+         }
       case MSG_READ:
          return {}
       default:
@@ -36,25 +41,27 @@ export function chat(state = initState, action) {
    }
 }
 
-function msgList(msgs, users) {
+function msgList(msgs, users, unread) {
    return {
       type: MSG_LIST,
-      payload: {msgs, users}
+      payload: {msgs, users, unread}
    }
 }
 
-function msgRecv(msgs) {
+function msgRecv(msgs, unread) {
    return {
       type: MSG_RECV,
-      payload: msgs
+      payload: {msgs, unread}
    }
 }
 
 export function recvMsg() {
-   return dispatch => {
+   return (dispatch, getState) => {
       socket.on('recvmsg', function (data) {
-         console.log('recvmsg', data)
-         dispatch(msgRecv(data))
+         let unread = data.to == getState().user._id ? 1 : 0
+         dispatch(msgRecv(data, unread))
+
+         console.log('recvmsg', data, unread)
       })
    }
 }
@@ -66,10 +73,16 @@ export function sendMsg({from, to, msg}) {
 }
 
 export function getMsgList(state = initState, action) {
-   return dispatch=> {
+   return (dispatch, getState)=> {
       axios.get('/user/getmsglist').then(res=> {
          if (res.data.code == 0 && res.status == 200) {
-            dispatch(msgList(res.data.msgs, res.data.users))
+
+            const userid = getState().user._id
+            const unread = res.data.msgs.filter(v=> {
+               return (!v.read && v.to == userid)
+            }).length
+
+            dispatch(msgList(res.data.msgs, res.data.users, unread))
          }
       })
    }
