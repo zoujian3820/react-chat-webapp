@@ -5,14 +5,14 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {List,InputItem,NavBar,Toast,Icon,Grid} from 'antd-mobile'
 import io from 'socket.io-client'
-import {getMsgList,sendMsg,recvMsg} from '../../redux/chat.redux'
+import {getMsgList,sendMsg,recvMsg,readMsg} from '../../redux/chat.redux'
 import {isEmptyObject,getChatId} from '../../util'
 
 const socket = io('ws://localhost:9093')
 
 @connect(
    state=>state,
-   {getMsgList, sendMsg, recvMsg}
+   {getMsgList, sendMsg, recvMsg, readMsg}
 )
 class Chat extends React.Component {
    constructor(props) {
@@ -31,13 +31,21 @@ class Chat extends React.Component {
          this.props.recvMsg()
       }
 
-      this.fixCarousel()
+      const to = this.props.match.params.user
+
+      this.props.readMsg(to)
+      //this.fixCarousel()
       //socket.on('recvmsg', function (data) {
       //   console.log(data)
       //   this.setState({
       //      msg: [...this.state.msg, data.text]
       //   })
       //}.bind(this))
+   }
+
+   componentWillUnmount() {
+      const to = this.props.match.params.user
+      this.props.readMsg(to)
    }
 
    fixCarousel() {
@@ -54,7 +62,7 @@ class Chat extends React.Component {
       msg ? this.props.sendMsg({from, to, msg}) : Toast.info('请输入内容!!', 1)
       this.setState({
          text: '',
-         showEmoji: !this.state.showEmoji
+         showEmoji: false
       })
       //console.log(this)
    }

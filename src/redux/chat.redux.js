@@ -35,7 +35,13 @@ export function chat(state = initState, action) {
             unread: state.unread + action.payload.unread
          }
       case MSG_READ:
-         return {}
+         const {from,userid,num} = action.payload
+         return {
+            ...state,
+            //chatmsg: state.chatmsg.map(v=>({...v, read: v.from === from ? true : v.read})),
+            chatmsg: state.chatmsg.map(v=>(v.from === from ? {...v, read: true} : v)),//清除的是发自对方用户发过来的消息，不是自己本身的，所以用form判断，不用to
+            unread: state.unread - num
+         }
       default:
          return state
    }
@@ -52,6 +58,26 @@ function msgRecv(msgs, unread) {
    return {
       type: MSG_RECV,
       payload: {msgs, unread}
+   }
+}
+
+function msgRead({from,userid,num}) {
+   return {
+      type: MSG_READ,
+      payload: {from, userid, num}
+   }
+}
+
+export function readMsg(from) {
+   return (dispatch, getState)=> {
+      axios.post('/user/readmsg', {from}).then(res=> {
+         const userid = getState().user._id
+
+         if (res.status == 200 && res.data.code == 0) {
+            //console.log(res.data)
+            dispatch(msgRead({userid, from, num: res.data.num}))
+         }
+      })
    }
 }
 

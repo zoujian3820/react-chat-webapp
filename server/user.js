@@ -36,6 +36,27 @@ Router.get('/getmsglist', function (req, res) {
    })
 })
 
+Router.post('/readmsg', function (req, res) {
+   const userid = req.cookies.userid
+   //if (!userid) {
+   //   return json.dumps({code: 1})
+   //}
+   const {from} = req.body
+   console.log(from, userid)
+   Chat.update(
+      {from, to: userid},
+      {'$set': {read: true}},
+      {'multi': true},//multi修改多行
+      function (err, doc) {
+         console.log(doc)
+         if (!err) {
+            return res.json({code: 0, num: doc.nModified})
+         }
+         return res.json({code: 1, msg: '修改失败'})
+      })
+})
+
+
 Router.post('/update', function (req, res) {
    const userid = req.cookies.userid
    if (!userid) {
