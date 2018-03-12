@@ -31,4 +31,10 @@
 `cnpm install socket.io --save           socket.io基于 WebSocket 的 C-S 服务器端实时通信库`<br>
 `cnpm install socket.io-client --save    socket.io基于 WebSocket 的 C-S 浏览器客户端实时通信库`<br>
 
+###### emoji表情包
+`src/component/chat/chat-icon-img.js 用img图片做emoji表情版本，chat.js用的是纯emoji做表情,
+要看img表情包版本，直接把chat-icon-img.js改成chat.js，原先的chat.js先改其他名，免文件冲突
+src/index-icon-img.css 改成 index.css,原生index.css和上面一致
+然后直接运行即可`<br>
+
 ##### 项目运行 npm start
