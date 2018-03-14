@@ -11,12 +11,40 @@ const _filter = {'pwd': 0, '__v': 0}
 
 Router.get('/list', function (req, res) {
    // User.remove({}, (err, doc)=> {})
-   const {type} = req.query
 
-   User.find({type}, function (err, doc) {
-      return res.json({code: 0, data: doc})
-   })
+   //练习的CORS跨域接口
+   res.header('Access-Control-Allow-Origin', '*');        // * 这个表示任意域名都可以访问，这样写不能携带cookie了。 || 'http://localhost:5080'
+
+   res.header('Access-Control-Allow-Credentials', true);  // 允许服务器端发送Cookie数据,
+                                                          // 若前端上axios.defaults.withCredentials = true设置为true了，
+                                                          // 则Access-Control-Allow-Credentials必须为true,否则会请求失败，报错
+   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');//它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段
+   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');  //设置方法
+
+   /* 前端请求代码
+    * import axios from 'axios'
+    * axios.defaults.withCredentials = true
+    *
+    * axios.get('http://localhost:9093/user/list?type=boss').then((res)=> {
+    *   console.log(res)
+    * }).catch(error=>{
+    *   console.log('跨域error',error)
+    * })
+    */
+
+
+   if (req.method == 'OPTIONS') {
+      res.send(200);   //在正常的请求之前，会发送一个验证，是否可以请求。
+   } else {
+      const {type} = req.query
+      User.find({type}, function (err, doc) {
+         return res.json({code: 0, data: doc})
+      })
+   }
+
+
 })
+
 
 Router.get('/getmsglist', function (req, res) {
    //Chat.remove({}, (err, doc)=> {})
